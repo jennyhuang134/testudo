@@ -1,0 +1,344 @@
+Pseudo Code for Snake Game
+Import random, turtle, and time, package 
+
+import pygame
+import icons/image
+import random number
+import time
+import speed
+import a tracker
+import dictionary
+empty
+append 
+determine advancement or null
+import frame (fps)
+define screen width + height
+declare x and y values (coordinates)
+define functions:
+location
+food/eat
+movement (up,down,left,right)
+define distance turtle moves when pressing key
+length/size of turtle
+extend/grow
+for events in pygame
+directions~
+if event key = left
+	move left
+elif event key = right
+	move right
+elif event key = up
+	move up
+elif event key= down
+	move down
+define pause
+if paused = true
+print  “waiting”
+else : continue
+establish a for loop:
+if (run into wall or itself):
+Break
+End game
+Count points
+Print “game over”
+print “score”
+elif (eat a block of money):
+Continue & tracker+ 1
+- elif
+continue 
+
+
+
+
+give the allow or not allow statement into a dictionary. 
+does finished project display an understanding of thinking and design
+understanding of how to get python 
+
+#import different modules
+import pygame
+import time
+import random
+#import KEY_RIGHT, KEY_LEFT, KEY_UP, KEY_DOWN
+#add colors
+purple2 =(89,0,179)
+blue2 = (119,206,227)
+pink = (255, 174, 201)
+orange = (241, 196, 15)
+purple = (235, 222, 240)
+white = (255,255,255)
+black = (0,0,0)
+red = (255,0,0)
+green = (26, 188, 156)
+blue = (0, 162, 232)
+grey = (121, 125, 127)
+
+# Define screen size
+Screen_width= 1000
+Screen_Height= 900
+#import icon & images to our game
+#import images for the background
+testudo = pygame.image.load('testudo.jpg')
+money = pygame.image.load('money.jpg')
+display = pygame.display.set_mode(screen_width, Screen_Height)
+pygame.display.set_caption('Testudo')
+
+
+#Added the clock
+Clock = pygame.time.Clock()
+#size of the icon
+testudo_size = 35
+money_size = 25
+#added frame for the speed of testudo
+FPS = 10
+
+# set font size for the game
+
+Font_Small = pygame.font.SysFont("Pacifico", 30)
+
+Font_Medium = pygame.font.SysFont("Pacifico", 45)
+
+Font_Large = pygame.font.SysFont("Pacifico", 125)
+
+#give a pause function
+def Game_Pause():
+    Paused = True
+    Screen_Description("Waiting")
+    Screen_Description("Press c to continue or Q to quit")
+    pygame.display.update()
+#function while in pause
+    while paused:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_c:
+                    Paused = False
+                elif event.key == pygame.K_q:
+                    pygame.quit()
+                    quit()
+                    
+            Clock.tick(10)
+# adding a score function
+def score(score):
+    text= Font_Small.render("Score: "+str(score), True)
+    display.blit(text, [0,0])
+# give testudo a random spawn location
+def random money():
+    money_one = round(random.randrange(0,Screen_Width-money_size))
+    money_two = round(random.randrange(0,Screen_Height-money_size))
+    
+    return money_one,money_two
+#Set keys and screen messages
+
+def Introduction():
+#While on the intro screen, user can press keys to quit or play    
+    intro = True
+    while intro:
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+#press c to play
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_c:
+                    intro = False
+#press q to quit
+            if event.key == pygame.K_q:
+                pygame.quit()
+                quit()
+        
+        display.blit(bg1,(0,0))
+#while on the intro screen, display the following messages    
+        Screen_Description("Testudo Eat",
+                       blue2,
+                       -200,
+                       "large")
+        Screen_Description("The objective of the game is to eat money",
+                       red,
+                       -30)
+        Screen_Description("The more money you get, the bigger your body gets",
+                       red,
+                       10)
+        Screen_Description("If you run into yourself or the edges, game is over.",
+                       red,
+                       50)
+        Screen_Description("Press C to play, P to pause or Q to exit.",
+                       white,
+                       180)
+
+        pygame.display.update()
+        Clock.tick(15)
+
+# Defined the testudo movement  
+
+def piplup(Size_Block, Testudo_Move):
+#use the arrows (up, down, left, right) to move
+    if direction == "right":
+        head = pygame.transform.rotate(Images, 270)
+    if direction == "left":
+        head = pygame.transform.rotate(Images, 90)
+    if direction == "up":
+        head = Images
+    if direction == "down":
+        head = pygame.transform.rotate(Images, 180)
+    
+    display.blit(head, (Testudo_Move[-1][0], Testudo_Move[-1][1]))
+    
+    for AnB in Testudo_Move[:-1]:
+        pygame.draw.rect(display, blue, [AnB[0],AnB[1],Size_Block,Size_Block])
+
+
+#The legs follows the same path as the testudo thats chasing/catching
+    if direction == "right":
+        testudo = pygame.transform.rotate(testudo, 270)
+    if direction == "left":
+        testudo = pygame.transform.rotate(testudo, 90)
+    if direction == "up":
+        testudo = testudo
+    if direction == "down":
+        testudo = pygame.transform.rotate(testudo, 180)
+
+
+    for AnB in Testudo_Move[0]:
+        display.blit(testudo,(Testudo_Move[0][0],Testudo_Move[0][1]))
+
+#Added text stuff (add colors and fonts size)        
+
+def Text_Things(text,color,size):
+#If text is small,med, or large set it size and give it a color    
+    if size == "small":
+        textSurface = Font_Small.render(text, True, color)
+    elif size == "med":
+        textSurface = Font_Medium.render(text, True, color)
+    elif size == "large":
+        textSurface = Font_Large.render(text, True, color)
+    return textSurface, textSurface.get_rect()
+
+#Added screen messages font and color
+
+def Screen_Description(msg,color,y_displace=0, size = "small"):
+#Set the screen message to small and center it    
+    textSurf, textRect = Text_Things(msg,color, size)
+    textRect.center = (Screen_Width / 2), (Screen_Height / 2)+y_displace
+    display.blit(textSurf, textRect)
+
+#Define Game loop so everything runs and works
+
+def Game_Loop():
+#Set the position to always start from (right)    
+    global direction
+    direction = 'right'
+    
+    game = False
+    End_Game = False
+
+    So_x = Screen_Width / 2
+    So_y = Screen_Height / 2
+    So_x_change = 10
+    So_y_change = 0
+#if game started, start the turtle body length as 1 
+    Testudo_Move = []
+    testudolength = 1
+
+    money_one,money_two = random_money()
+
+#End game message 
+#while the game ends, display the following messages    
+    while not game:
+
+        if End_Game == True:
+            Screen_Description("Awwww...Good Luck Next Time!", pink,
+                           y_displace = -50,
+                           size = "med")
+            Screen_Description("Press C to play again or Q to quit",
+                           pink,
+                           50,
+                           size = "small")
+            pygame.display.update()
+
+
+
+#while the game ends, user can press q or c to either quit or continue playing the game        
+        while End_Game == True:
+           
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    game = True
+                    End_Game = False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_q:
+                        game = True
+                        End_Game = False
+                    if event.key == pygame.K_c:
+                        Game_Loop()
+
+#Keys functionality
+#set keys to where it should move so all it size is the same, not increasing its size when the use press (up, down, left, right)
+#Set the key p to pause                        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game == True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    direction = "left"
+                    So_x_change = -Size_Block
+                    So_y_change = 0
+                elif event.key == pygame.K_RIGHT:
+                    direction = "right"
+                    So_x_change = Size_Block
+                    So_y_change = 0
+                elif event.key == pygame.K_UP:
+                    direction = "up"
+                    So_y_change = -Size_Block
+                    So_x_change = 0
+                elif event.key == pygame.K_DOWN:
+                    direction = "down"
+                    So_y_change = Size_Block
+                    So_x_change = 0
+
+                elif event.key == pygame.K_p:
+                    Game_Pause()
+#Screen functionality                   
+
+        if So_x >= Screen_Width or So_x < 0 or So_y >= Screen_Height or So_y < 0:
+            End_Game = True
+        So_x += So_x_change
+        So_y += So_y_change 
+        display.fill(white)
+#Background image Functionality      
+        display.blit(bg,(0,0))
+        display.blit(moneyImages, (money_one, money_two))
+        testudohead = []
+        testudohead.append(So_x)
+        testudohead.append(So_y)
+        Testudo_Move.append(testudohead)
+        if len(Testudo_Move) > testudolength:
+            del Testudo_Move[0]
+        for eachsegment in Testudo_Move[:-1]:
+            if eachsegment == testudohead:
+                End_Game = True    
+#Size functionality (Increasing)      
+        piplup(Size_Block,Testudo_Move)
+#if the testudo eats the money it score increase by 1
+        score(testudolength-1)
+        pygame.display.update()
+#if the testudo eats the money, it size increase by 1 
+        if So_x > money_one and So_x < money_one + money_size or So_x + Size_Block > money_one and So_x + Size_Block < money_one + money_size:
+            if So_y > money_two and So_y < money_two + money_size:
+                money_one,money_two = random_money()
+                testudolength += 1
+        
+
+#output the functions
+        
+        Clock.tick(FPS)
+#Quit Game
+    pygame.quit()
+    quit()
+Introduction()
+Game_Loop()
+
